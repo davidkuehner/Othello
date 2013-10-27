@@ -16,9 +16,14 @@ public class Joueur extends Othello.Joueur
 
 	public Move nextPlay(Move move)
 	{
-		grid.addTurn(move, ADVCOLOR);
+		if(move!=null)
+			grid.addTurn(move, ADVCOLOR);
 		
-		return minmax();
+		Move mymove = minmax();
+		if(mymove!=null)
+			grid.addTurn(mymove, MYCOLOR);
+		
+		return mymove;
 	}
 	
 	private Move minmax()

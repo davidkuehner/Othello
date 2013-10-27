@@ -34,7 +34,6 @@ public class Cell
 	@Override
 	public String toString()
 	{
-		
 		return "(" + getI() + " " + getJ() + ")";
 	}
 	
