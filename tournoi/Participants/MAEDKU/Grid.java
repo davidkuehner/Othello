@@ -13,7 +13,6 @@ public class Grid
 	public Grid(int size)
 	{
 		this.size = size;
-		cells = new Cell[this.size*this.size];
 		
 		initGrid();
 	}
@@ -21,13 +20,13 @@ public class Grid
 	public Grid(Grid grid)
 	{
 		this.size = grid.size;
-		this.cells = new Cell[this.size*this.size];
 		
+		this.cells = new Cell[this.size][this.size];
 		for(int i = 0; i < this.size; ++i)
 		{
 			for(int j = 0; j < this.size; j++)
 			{
-				this.cells[i*j] = new Cell(grid.cells[i*j]);
+				this.cells[i][j] = new Cell(grid.cells[i][j]);
 			}
 		}
 	}
@@ -135,53 +134,65 @@ public class Grid
 	
 	private void initGrid()
 	{
+		cells = new Cell[this.size][this.size];
 		for(int i = 0; i < this.size; ++i)
 		{
 			for(int j = 0; j < this.size; j++)
 			{
-				this.cells[i*j] = new Cell(i,j);
+				this.cells[i][j] = new Cell(i, j);
 			}
 		}
 	}
 	
-		private Cell getNorth(int i, int j)
+	private Cell getCell(int i, int j)
 	{
+		if(0 <= i && i <= this.cells.length
+			&& 0 <= j && j <= this.cells[i].length )
+		{
+			return cells[i][j];
+		}
+		
 		return null;
+	}
+	
+	private Cell getNorth(int i, int j)
+	{
+		return getCell(i-1, j);
 	}
 	
 	private Cell getNorthEast(int i, int j)
 	{
-		return null;
+		return getCell(i-1, j+1);
 	}
 	
 	private Cell getEast(int i, int j)
 	{
-		return null;
+		return getCell(i, j+1);
 	}
 	
 	private Cell getSouthEast(int i, int j)
 	{
-		return null;
+		return getCell(i+1, j+1);
 	}
 	
 	private Cell getSouth(int i, int j)
 	{
-		return null;
+		return getCell(i+1, j);
 	}
 
 	private Cell getSouthWest(int i, int j)
 	{
-		return null;
+		return getCell(i+1, j-1);
 	}
 	
 	private Cell getWest(int i, int j)
 	{
-		return null;
+		return getCell(i, j-1);
 	}
 	
 	private Cell getNorthWest(int i, int j)
 	{
-		return null;
+		return getCell(i-1, j-1);
 	}
 	
 	private boolean checkSouthLineForOwner(int i, int j, Cell.Owner owner)
@@ -248,5 +259,5 @@ public class Grid
 	private int size;
 	
 	// Tools 
-	private Cell[] cells;
+	private Cell[][] cells;
 }
