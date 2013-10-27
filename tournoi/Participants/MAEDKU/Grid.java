@@ -72,6 +72,67 @@ public class Grid
 		System.out.println(grid.getNorthEast(7,7));
 		System.out.println(grid.getEast(7,7));
 		System.out.println(grid.getSouthEast(7,7));
+		
+		grid = new Grid(8);
+		grid.getCell(2,2).setOwner(Cell.Owner.BLUE);
+		grid.getCell(2,3).setOwner(Cell.Owner.BLUE);
+		grid.getCell(2,4).setOwner(Cell.Owner.BLUE);
+		grid.getCell(2,5).setOwner(Cell.Owner.BLUE);
+		grid.getCell(2,6).setOwner(Cell.Owner.BLUE);
+		grid.getCell(3,2).setOwner(Cell.Owner.BLUE);
+		grid.getCell(3,3).setOwner(Cell.Owner.BLUE);
+		grid.getCell(3,4).setOwner(Cell.Owner.BLUE);
+		grid.getCell(3,5).setOwner(Cell.Owner.BLUE);
+		grid.getCell(3,6).setOwner(Cell.Owner.BLUE);
+		grid.getCell(4,2).setOwner(Cell.Owner.BLUE);
+		grid.getCell(4,3).setOwner(Cell.Owner.BLUE);
+		grid.getCell(4,4).setOwner(Cell.Owner.BLUE);
+		grid.getCell(4,5).setOwner(Cell.Owner.BLUE);
+		grid.getCell(4,6).setOwner(Cell.Owner.BLUE);
+		grid.getCell(5,2).setOwner(Cell.Owner.BLUE);
+		grid.getCell(5,3).setOwner(Cell.Owner.BLUE);
+		grid.getCell(5,4).setOwner(Cell.Owner.BLUE);
+		grid.getCell(5,5).setOwner(Cell.Owner.BLUE);
+		grid.getCell(5,6).setOwner(Cell.Owner.BLUE);
+		grid.getCell(6,2).setOwner(Cell.Owner.BLUE);
+		grid.getCell(6,3).setOwner(Cell.Owner.BLUE);
+		grid.getCell(6,4).setOwner(Cell.Owner.BLUE);
+		grid.getCell(6,5).setOwner(Cell.Owner.BLUE);
+		grid.getCell(6,6).setOwner(Cell.Owner.BLUE);
+		System.out.println("------------------------");
+		System.out.println(grid);
+		
+		System.out.println(grid.checkSouthLineForOwner(4,4, Cell.Owner.RED));
+		grid.getCell(7,4).setOwner(Cell.Owner.RED);
+		System.out.println(grid.checkSouthLineForOwner(4,4, Cell.Owner.RED));
+		
+		System.out.println(grid.checkSouthWestLineForOwner(4,4, Cell.Owner.RED));
+		grid.getCell(7,1).setOwner(Cell.Owner.RED);
+		System.out.println(grid.checkSouthWestLineForOwner(4,4, Cell.Owner.RED));
+		
+		System.out.println(grid.checkWestLineForOwner(4,4, Cell.Owner.RED));
+		grid.getCell(4,1).setOwner(Cell.Owner.RED);
+		System.out.println(grid.checkWestLineForOwner(4,4, Cell.Owner.RED));
+		
+		System.out.println(grid.checkNorthWestLineForOwner(4,4, Cell.Owner.RED));
+		grid.getCell(1,1).setOwner(Cell.Owner.RED);
+		System.out.println(grid.checkNorthWestLineForOwner(4,4, Cell.Owner.RED));
+		
+		System.out.println(grid.checkNorthLineForOwner(4,4, Cell.Owner.RED));
+		grid.getCell(1,4).setOwner(Cell.Owner.RED);
+		System.out.println(grid.checkNorthLineForOwner(4,4, Cell.Owner.RED));
+		
+		System.out.println(grid.checkNorthEastLineForOwner(4,4, Cell.Owner.RED));
+		grid.getCell(1,7).setOwner(Cell.Owner.RED);
+		System.out.println(grid.checkNorthEastLineForOwner(4,4, Cell.Owner.RED));
+		
+		System.out.println(grid.checkEastLineForOwner(4,4, Cell.Owner.RED));
+		grid.getCell(4,7).setOwner(Cell.Owner.RED);
+		System.out.println(grid.checkEastLineForOwner(4,4, Cell.Owner.RED));
+		
+		System.out.println(grid.checkSouthEastLineForOwner(4,4, Cell.Owner.RED));
+		grid.getCell(7,7).setOwner(Cell.Owner.RED);
+		System.out.println(grid.checkSouthEastLineForOwner(4,4, Cell.Owner.RED));
 	}
 
 	/**********************************
@@ -205,6 +266,10 @@ public class Grid
 	
 	public void addTurn(Move move, Cell.Owner owner)
 	{
+		Cell cell = getCell(move.i, move.j);
+		
+		if(cell != null)
+			cell.setOwner(owner);
 	}
 
 	
@@ -284,56 +349,104 @@ public class Grid
 	{
 		Cell cell = getSouth(i,j);
 		if(cell == null)
-		{
 			return false;
-		}
-		
-		if(cell.getOwner() == owner)
-		{
+		else if(cell.getOwner() == owner)
 			return true;
-		}
-		
-		return checkSouthLineForOwner(cell.getI(), cell.getJ(), owner);
+		else if(cell.getOwner() != Cell.Owner.UNDEF)
+			return checkSouthLineForOwner(cell.getI(), cell.getJ(), owner);
+		else
+			return false;
 	}
 	
 	private boolean checkSouthWestLineForOwner(int i, int j, Cell.Owner owner)
 	{
-		return false;
+		Cell cell = getSouthWest(i,j);
+		if(cell == null)
+			return false;
+		else if(cell.getOwner() == owner)
+			return true;
+		else if(cell.getOwner() != Cell.Owner.UNDEF)
+			return checkSouthWestLineForOwner(cell.getI(), cell.getJ(), owner);
+		else
+			return false;
 	}
 	
 	private boolean checkWestLineForOwner(int i, int j, Cell.Owner owner)
 	{
-		return false;
+		Cell cell = getWest(i,j);
+		if(cell == null)
+			return false;
+		else if(cell.getOwner() == owner)
+			return true;
+		else if(cell.getOwner() != Cell.Owner.UNDEF)
+			return checkWestLineForOwner(cell.getI(), cell.getJ(), owner);
+		else
+			return false;
 	}
 	
 	private boolean checkNorthWestLineForOwner(int i, int j, Cell.Owner owner)
 	{
-		return false;
+		Cell cell = getNorthWest(i,j);
+		if(cell == null)
+			return false;
+		else if(cell.getOwner() == owner)
+			return true;
+		else if(cell.getOwner() != Cell.Owner.UNDEF)
+			return checkNorthWestLineForOwner(cell.getI(), cell.getJ(), owner);
+		else
+			return false;
 	}
 	
 	private boolean checkNorthLineForOwner(int i, int j, Cell.Owner owner)
 	{
-		return false;
+		Cell cell = getNorth(i,j);
+		if(cell == null)
+			return false;
+		else if(cell.getOwner() == owner)
+			return true;
+		else if(cell.getOwner() != Cell.Owner.UNDEF)
+			return checkNorthLineForOwner(cell.getI(), cell.getJ(), owner);
+		else
+			return false;
 	}
 	
 	private boolean checkNorthEastLineForOwner(int i, int j, Cell.Owner owner)
 	{
-		return false;
+		Cell cell = getNorthEast(i,j);
+		if(cell == null)
+			return false;
+		else if(cell.getOwner() == owner)
+			return true;
+		else if(cell.getOwner() != Cell.Owner.UNDEF)
+			return checkNorthEastLineForOwner(cell.getI(), cell.getJ(), owner);
+		else
+			return false;
 	}
 	
 	private boolean checkEastLineForOwner(int i, int j, Cell.Owner owner)
 	{
-		return false;
+		Cell cell = getEast(i,j);
+		if(cell == null)
+			return false;
+		else if(cell.getOwner() == owner)
+			return true;
+		else if(cell.getOwner() != Cell.Owner.UNDEF)
+			return checkEastLineForOwner(cell.getI(), cell.getJ(), owner);
+		else
+			return false;
 	}
 	
 	private boolean checkSouthEastLineForOwner(int i, int j, Cell.Owner owner)
 	{
-		return false;
-	}
-	
-	private boolean neihboorIsAdversary(Cell c, Cell.Owner owner )
-	{
-		return false;
+		Cell cell = getSouthEast(i,j);
+		if(cell == null)
+			return false;
+		else if(cell.getOwner() == owner)
+			return true;
+		else if(cell.getOwner() != Cell.Owner.UNDEF)
+			return checkSouthEastLineForOwner(cell.getI(), cell.getJ(), owner);
+		else
+			return false;
 	}
 	
 	/**********************************
