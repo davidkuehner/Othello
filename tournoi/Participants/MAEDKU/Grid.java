@@ -103,15 +103,15 @@ public class Grid
 		System.out.println(grid);
 		
 		System.out.println(grid.checkSouthLineForOwner(4,4, Cell.Owner.RED));
-		grid.getCell(7,4).setOwner(Cell.Owner.RED);
+		grid.getCell(4,7).setOwner(Cell.Owner.RED);
 		System.out.println(grid.checkSouthLineForOwner(4,4, Cell.Owner.RED));
 		
 		System.out.println(grid.checkSouthWestLineForOwner(4,4, Cell.Owner.RED));
-		grid.getCell(7,1).setOwner(Cell.Owner.RED);
+		grid.getCell(1,7).setOwner(Cell.Owner.RED);
 		System.out.println(grid.checkSouthWestLineForOwner(4,4, Cell.Owner.RED));
 		
 		System.out.println(grid.checkWestLineForOwner(4,4, Cell.Owner.RED));
-		grid.getCell(4,1).setOwner(Cell.Owner.RED);
+		grid.getCell(1,4).setOwner(Cell.Owner.RED);
 		System.out.println(grid.checkWestLineForOwner(4,4, Cell.Owner.RED));
 		
 		System.out.println(grid.checkNorthWestLineForOwner(4,4, Cell.Owner.RED));
@@ -119,15 +119,15 @@ public class Grid
 		System.out.println(grid.checkNorthWestLineForOwner(4,4, Cell.Owner.RED));
 		
 		System.out.println(grid.checkNorthLineForOwner(4,4, Cell.Owner.RED));
-		grid.getCell(1,4).setOwner(Cell.Owner.RED);
+		grid.getCell(4,1).setOwner(Cell.Owner.RED);
 		System.out.println(grid.checkNorthLineForOwner(4,4, Cell.Owner.RED));
 		
 		System.out.println(grid.checkNorthEastLineForOwner(4,4, Cell.Owner.RED));
-		grid.getCell(1,7).setOwner(Cell.Owner.RED);
+		grid.getCell(7,1).setOwner(Cell.Owner.RED);
 		System.out.println(grid.checkNorthEastLineForOwner(4,4, Cell.Owner.RED));
 		
 		System.out.println(grid.checkEastLineForOwner(4,4, Cell.Owner.RED));
-		grid.getCell(4,7).setOwner(Cell.Owner.RED);
+		grid.getCell(7,4).setOwner(Cell.Owner.RED);
 		System.out.println(grid.checkEastLineForOwner(4,4, Cell.Owner.RED));
 		
 		System.out.println(grid.checkSouthEastLineForOwner(4,4, Cell.Owner.RED));
@@ -251,9 +251,10 @@ public class Grid
 		this.size = grid.size;
 		
 		this.cells = new Cell[this.size][this.size];
-		for(int i = 0; i < this.size; ++i)
+			
+		for(int j = 0; j < this.size; j++)
 		{
-			for(int j = 0; j < this.size; j++)
+			for(int i = 0; i < this.size; ++i)
 			{
 				this.cells[i][j] = new Cell(grid.cells[i][j]);
 			}
@@ -276,10 +277,11 @@ public class Grid
 				sb.append("|" + j);
 			sb.append("\n");
 		}
-		for(int i = 0; i < cells.length; ++i)
+		
+		for(int j = 0; j < cells.length; ++j)
 		{
-			sb.append(i);
-			for(int j = 0; j < cells[i].length; ++j)
+			sb.append(j);
+			for(int i = 0; i < cells[j].length; ++i)
 			{
 				switch(cells[i][j].getOwner())
 				{
@@ -320,9 +322,9 @@ public class Grid
 		List<Move> ops = new ArrayList<Move>();
 		
 		
-		for(int i = 0; i < size; ++i)
+		for(int j = 0; j < cells.length; ++j)
 		{
-			for(int j = 0; j < size; ++j)
+			for(int i = 0; i < cells[j].length; ++i)
 			{
 				if(validMove(i, j, owner))
 				{
@@ -457,17 +459,17 @@ public class Grid
 	
 	private Cell getNorth(int i, int j)
 	{
-		return getCell(i-1, j);
+		return getCell(i, j-1);
 	}
 	
 	private Cell getNorthEast(int i, int j)
 	{
-		return getCell(i-1, j+1);
+		return getCell(i+1, j-1);
 	}
 	
 	private Cell getEast(int i, int j)
 	{
-		return getCell(i, j+1);
+		return getCell(i+1, j);
 	}
 	
 	private Cell getSouthEast(int i, int j)
@@ -477,17 +479,17 @@ public class Grid
 	
 	private Cell getSouth(int i, int j)
 	{
-		return getCell(i+1, j);
+		return getCell(i, j+1);
 	}
 
 	private Cell getSouthWest(int i, int j)
 	{
-		return getCell(i+1, j-1);
+		return getCell(i-1, j+1);
 	}
 	
 	private Cell getWest(int i, int j)
 	{
-		return getCell(i, j-1);
+		return getCell(i-1, j);
 	}
 	
 	private Cell getNorthWest(int i, int j)
@@ -775,4 +777,7 @@ public class Grid
 	
 	// Tools 
 	private Cell[][] cells;
+			//   \ \
+			//    \ \- line/row index
+			//     \- column index
 }

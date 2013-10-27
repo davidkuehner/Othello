@@ -15,21 +15,21 @@ public class Cell
 	/**********************************
 	 * Constructor
 	 **********************************/
-	public Cell(int row, int column, Owner owner)
+	public Cell(int i, int j, Owner owner)
 	{
-		this.row = row;
-		this.column = column;
+		this.i = i;
+		this.j = j;
 		this.owner = owner;
 	}
 	 
-	public Cell(int row, int column)
+	public Cell(int i, int j)
 	{
-		this(row, column, Owner.UNDEF);
+		this(i, j, Owner.UNDEF);
 	}
 	
 	public Cell(Cell cell)
 	{
-		this(cell.row, cell.column, cell.owner);
+		this(cell.i, cell.j, cell.owner);
 	}
 	
 	/**********************************
@@ -45,25 +45,15 @@ public class Cell
 	/**********************************
 	 * Getter/Setter
 	 **********************************/
-	 
-	public int getRow()
-	{
-		return this.row;
-	}
 	
 	public int getI()
 	{
-		return getRow();
-	}
-	
-	public int getColumn()
-	{
-		return this.column;
+		return this.i;
 	}
 	
 	public int getJ()
 	{
-		return getColumn();
+		return this.j;
 	}
 	
 	public Owner getOwner()
@@ -81,7 +71,7 @@ public class Cell
 	 **********************************/
 	 
 	// Inputs/Outputs
-	private int row;
-	private int column;
+	private int i;  // Column
+	private int j;  // Line/row
 	private Owner owner;
 }
