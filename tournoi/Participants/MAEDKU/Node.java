@@ -21,7 +21,9 @@ public class Node
 	
 	public boolean isGameOver()
 	{
-		return ops().size() == 0;
+		List<Move> myMoves = grid.getPossibleTurns(owner);
+		List<Move> advMoves = grid.getPossibleTurns(Cell.getAdversary(owner));
+		return (myMoves.size() == 0 && advMoves.size() == 0);
 	}
 	
 	public List<Move> ops()
@@ -32,7 +34,17 @@ public class Node
 	public Node apply(Move move)
 	{
 		Grid newGrid = this.grid.cloneOf();
-		newGrid.addTurn(move, owner);
+		
+		try
+		{
+			newGrid.addTurn(move, owner);
+		}
+		catch(InvalidMoveException exception)
+		{
+			System.out.println("[MAEDKU] ouwou, we have catched an exception which shouldn't occure.");
+			System.out.println("[MAEDKU] We have extracted this move...:(.");
+			System.out.println("[MAEDKU] The cause is: " + exception.getMessage());
+		}
 		return new Node(newGrid, Cell.getAdversary(owner));
 	}
 }

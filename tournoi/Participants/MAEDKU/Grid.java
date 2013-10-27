@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Grid
 {
-    public static void main(String [ ] args)
+    public static void main(String [ ] args) throws InvalidMoveException
     {
 		Grid grid = new Grid(8);
 		System.out.print(grid.toString());
@@ -232,7 +232,7 @@ public class Grid
 		System.out.println("RED possible turns: ");
 		for(Move move : grid.getPossibleTurns(Cell.Owner.RED))
 			System.out.println("( " + move.i + ", " + move.j + " )");
-		
+
 	}
 
 	/**********************************
@@ -403,7 +403,7 @@ public class Grid
 		return false;
 	}
 	
-	public void addTurn(Move move, Cell.Owner owner)
+	public void addTurn(Move move, Cell.Owner owner) throws InvalidMoveException
 	{
 		if(validMove(move.i, move.j, owner))
 		{
@@ -422,6 +422,10 @@ public class Grid
 				swapWestCells(cell, owner);
 				swapNorthWestCells(cell, owner);
 			}
+		}
+		else
+		{
+			throw new InvalidMoveException(move, owner);
 		}
 	}
 

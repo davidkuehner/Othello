@@ -32,12 +32,29 @@ public class Joueur extends Othello.Joueur
 
 	public Move nextPlay(Move move)
 	{
-		if(move!=null)
-			grid.addTurn(move, advcolor);
-
+		try
+		{
+			if(move!=null)
+				grid.addTurn(move, advcolor);
+		}
+		catch(InvalidMoveException exception)
+		{
+			System.out.println("[MAEDKU] The move of the adversary is invalid!");
+			System.out.println("[MAEDKU] The cause is: " + exception.getMessage());
+		}
+		
 		Move mymove = minmax();
-		if(mymove!=null)
-			grid.addTurn(mymove, mycolor);
+		
+		try
+		{
+			if(mymove!=null)
+				grid.addTurn(mymove, mycolor);
+		}
+		catch(InvalidMoveException exception)
+		{
+			System.out.println("[MAEDKU] huff, we have done an error in our algorithm. That's not cool.");
+			System.out.println("[MAEDKU] The cause is: " + exception.getMessage());
+		}
 		
 		return mymove;
 	}
