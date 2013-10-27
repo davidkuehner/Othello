@@ -61,56 +61,35 @@ public class Joueur extends Othello.Joueur
 	
 	private Move minmax()
 	{
-		MinMaxResult res = max(new Node(this.grid, mycolor), this.depth);
+		MinMaxResult res = alphabeta(new Node(this.grid, mycolor), this.depth, true, Integer.MAX_VALUE);
 		return res.getMove();
 	}
 	
-	private MinMaxResult max(Node node, int depth)
+	private MinMaxResult alphabeta(Node node, int depth, boolean maximize, int parentValue)
 	{
 		if(depth == 0 || node.isGameOver())
 		{
 			return new MinMaxResult(null, node.eval());
 		}
 		
-		int maxValue = Integer.MIN_VALUE;
-		Move maxOp = null;
+		int optVal = (maximize ? Integer.MIN_VALUE : Integer.MAX_VALUE);
+		Move optOp = null;
 		
 		for(Move op : node.ops())
 		{
-			Node newChild = node.apply(op);
-			MinMaxResult minResult = min(newChild, depth - 1);
-			if(minResult.getValue() > maxValue)
-			{
-				maxValue = minResult.getValue();
-				maxOp = op;
-			}
-		}
-		
-		return new MinMaxResult(maxOp, maxValue);
-	}
-	
-	private MinMaxResult min(Node node, int depth)
-	{
-		if(depth == 0 || node.isGameOver())
-		{
-			return new MinMaxResult(null, node.eval());
-		}
-		
-		int minValue = Integer.MAX_VALUE;
-		Move minOp = null;
-		
-		for(Move op : node.ops())
-		{
-			Node newChild = node.apply(op);
-			MinMaxResult maxResult = max(newChild, depth - 1);
+			Node newNode = node.apply(op);
+			MinMaxResult res = alphabeta(newNode, depth-1, !maximize, optVal);
 			
-			if(maxResult.getValue() < minValue)
+			int factor = (maximize ? 1 : -1);
+			if(res.getValue() * factor > optVal * factor)
 			{
-				minValue = maxResult.getValue();
-				minOp = op;
+				optVal = res.getValue();
+				optOp = op;
+				if(optVal * factor > parentValue * factor)
+					break;
 			}
 		}
 		
-		return new MinMaxResult(minOp, minValue);
+		return new MinMaxResult(optOp, optVal);
 	}
 }
