@@ -55,18 +55,17 @@ public class Joueur extends Othello.Joueur
 			return new MinMaxResult(null, node.eval());
 		}
 		
-		int maxValue = Integer.MAX_VALUE * -1;
+		int maxValue = Integer.MIN_VALUE;
 		Move maxOp = null;
 		
 		for(Move op : node.ops())
 		{
 			Node newChild = node.apply(op);
 			MinMaxResult minResult = min(newChild, depth - 1);
-			
 			if(minResult.getValue() > maxValue)
 			{
 				maxValue = minResult.getValue();
-				maxOp = minResult.getMove();
+				maxOp = op;
 			}
 		}
 		
@@ -80,7 +79,7 @@ public class Joueur extends Othello.Joueur
 			return new MinMaxResult(null, node.eval());
 		}
 		
-		int minValue = Integer.MIN_VALUE;
+		int minValue = Integer.MAX_VALUE;
 		Move minOp = null;
 		
 		for(Move op : node.ops())
@@ -91,7 +90,7 @@ public class Joueur extends Othello.Joueur
 			if(maxResult.getValue() < minValue)
 			{
 				minValue = maxResult.getValue();
-				minOp = maxResult.getMove();
+				minOp = op;
 			}
 		}
 		
