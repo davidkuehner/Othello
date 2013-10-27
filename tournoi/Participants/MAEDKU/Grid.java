@@ -6,6 +6,74 @@ import java.util.List;
 
 public class Grid
 {
+    public static void main(String [ ] args)
+    {
+		Grid grid = new Grid(8);
+		System.out.print(grid.toString());
+		
+		
+		grid.getSouth(1,1).setOwner(Cell.Owner.RED);
+		grid.getSouthWest(1,1).setOwner(Cell.Owner.RED);
+		grid.getWest(1,1).setOwner(Cell.Owner.RED);
+		grid.getNorthWest(1,1).setOwner(Cell.Owner.RED);
+		grid.getNorth(1,1).setOwner(Cell.Owner.RED);
+		grid.getNorthEast(1,1).setOwner(Cell.Owner.RED);
+		grid.getEast(1,1).setOwner(Cell.Owner.RED);
+		grid.getSouthEast(1,1).setOwner(Cell.Owner.RED);
+
+		System.out.print(grid.toString());
+		
+		System.out.println("------------------------");
+		System.out.println(grid.getSouth(1,1));
+		System.out.println(grid.getSouthWest(1,1));
+		System.out.println(grid.getWest(1,1));
+		System.out.println(grid.getNorthWest(1,1));
+		System.out.println(grid.getNorth(1,1));
+		System.out.println(grid.getNorthEast(1,1));
+		System.out.println(grid.getEast(1,1));
+		System.out.println(grid.getSouthEast(1,1));
+		
+		System.out.println("------------------------");
+		System.out.println(grid.getSouth(0,0));
+		System.out.println(grid.getSouthWest(0,0));
+		System.out.println(grid.getWest(0,0));
+		System.out.println(grid.getNorthWest(0,0));
+		System.out.println(grid.getNorth(0,0));
+		System.out.println(grid.getNorthEast(0,0));
+		System.out.println(grid.getEast(0,0));
+		System.out.println(grid.getSouthEast(0,0));
+		
+		System.out.println("------------------------");
+		System.out.println(grid.getSouth(0,7));
+		System.out.println(grid.getSouthWest(0,7));
+		System.out.println(grid.getWest(0,7));
+		System.out.println(grid.getNorthWest(0,7));
+		System.out.println(grid.getNorth(0,7));
+		System.out.println(grid.getNorthEast(0,7));
+		System.out.println(grid.getEast(0,7));
+		System.out.println(grid.getSouthEast(0,7));
+		
+		System.out.println("------------------------");
+		System.out.println(grid.getSouth(7,0));
+		System.out.println(grid.getSouthWest(7,0));
+		System.out.println(grid.getWest(7,0));
+		System.out.println(grid.getNorthWest(7,0));
+		System.out.println(grid.getNorth(7,0));
+		System.out.println(grid.getNorthEast(7,0));
+		System.out.println(grid.getEast(7,0));
+		System.out.println(grid.getSouthEast(7,0));
+		
+		System.out.println("------------------------");
+		System.out.println(grid.getSouth(7,7));
+		System.out.println(grid.getSouthWest(7,7));
+		System.out.println(grid.getWest(7,7));
+		System.out.println(grid.getNorthWest(7,7));
+		System.out.println(grid.getNorth(7,7));
+		System.out.println(grid.getNorthEast(7,7));
+		System.out.println(grid.getEast(7,7));
+		System.out.println(grid.getSouthEast(7,7));
+	}
+
 	/**********************************
 	 * Constructor
 	 **********************************/
@@ -34,6 +102,23 @@ public class Grid
 	/**********************************
 	 * Public methods
 	 **********************************/
+	
+	@Override
+	public String toString()
+	{
+		StringBuilder sb = new StringBuilder();
+		for(int i = 0; i < cells.length; ++i)
+		{
+			for(int j = 0; j < cells[i].length; ++j)
+			{
+				sb.append("|"  + cells[i][j].getOwner());
+			}
+			sb.append("\n");
+		}
+		sb.append("\n");
+		
+		return sb.toString();
+	}
 	
 	@Override
 	public Object clone()
@@ -146,8 +231,8 @@ public class Grid
 	
 	private Cell getCell(int i, int j)
 	{
-		if(0 <= i && i <= this.cells.length
-			&& 0 <= j && j <= this.cells[i].length )
+		if(0 <= i && i < this.cells.length
+			&& 0 <= j && j < this.cells[i].length )
 		{
 			return cells[i][j];
 		}
