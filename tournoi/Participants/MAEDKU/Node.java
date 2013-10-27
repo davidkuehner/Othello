@@ -33,6 +33,6 @@ public class Node
 	{
 		Grid newGrid = this.grid.cloneOf();
 		newGrid.addTurn(move, owner);
-		return new Node(newGrid, owner == Cell.Owner.RED ? Cell.Owner.BLUE : Cell.Owner.RED );
+		return new Node(newGrid, Cell.getAdversary(owner));
 	}
 }

@@ -34,7 +34,7 @@ public class Joueur extends Othello.Joueur
 	{
 		if(move!=null)
 			grid.addTurn(move, advcolor);
-		
+
 		Move mymove = minmax();
 		if(mymove!=null)
 			grid.addTurn(mymove, mycolor);
@@ -44,9 +44,6 @@ public class Joueur extends Othello.Joueur
 	
 	private Move minmax()
 	{
-		Node node = new Node(this.grid, mycolor);
-		System.out.println(node.ops());
-		
 		MinMaxResult res = max(new Node(this.grid, mycolor), this.depth);
 		return res.getMove();
 	}

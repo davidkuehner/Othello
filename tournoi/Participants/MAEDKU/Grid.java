@@ -133,6 +133,106 @@ public class Grid
 		System.out.println(grid.checkSouthEastLineForOwner(4,4, Cell.Owner.RED));
 		grid.getCell(7,7).setOwner(Cell.Owner.RED);
 		System.out.println(grid.checkSouthEastLineForOwner(4,4, Cell.Owner.RED));
+		System.out.println("");
+
+		grid = new Grid(8);
+		grid.getCell(3,3).setOwner(Cell.Owner.BLUE);
+		grid.getCell(4,3).setOwner(Cell.Owner.RED);
+		grid.getCell(3,4).setOwner(Cell.Owner.RED);
+		grid.getCell(4,4).setOwner(Cell.Owner.BLUE);
+		System.out.println("------------------------");
+		System.out.println(grid);
+		
+		System.out.println("Valid moves RED: ");
+		System.out.println(grid.validMove(2,3, Cell.Owner.RED));
+		System.out.println(grid.validMove(3,2, Cell.Owner.RED));
+		System.out.println(grid.validMove(5,4, Cell.Owner.RED));
+		System.out.println(grid.validMove(4,5, Cell.Owner.RED));
+		System.out.println("Invalid moves RED: ");
+		System.out.println(grid.validMove(2,2, Cell.Owner.RED));
+		System.out.println(grid.validMove(2,4, Cell.Owner.RED));
+		System.out.println(grid.validMove(2,5, Cell.Owner.RED));
+		System.out.println(grid.validMove(3,5, Cell.Owner.RED));
+		System.out.println(grid.validMove(5,5, Cell.Owner.RED));
+		System.out.println(grid.validMove(5,3, Cell.Owner.RED));
+		System.out.println(grid.validMove(5,2, Cell.Owner.RED));
+		System.out.println(grid.validMove(4,2, Cell.Owner.RED));
+		
+		for(Move move : grid.getPossibleTurns(Cell.Owner.RED))
+			System.out.println("( " + move.i + ", " + move.j + " )");
+		
+		System.out.println("Valid moves BLUE: ");
+		System.out.println(grid.validMove(4,2, Cell.Owner.BLUE));
+		System.out.println(grid.validMove(2,4, Cell.Owner.BLUE));
+		System.out.println(grid.validMove(5,3, Cell.Owner.BLUE));
+		System.out.println(grid.validMove(3,5, Cell.Owner.BLUE));
+		System.out.println("Invalid moves BLUE: ");
+		System.out.println(grid.validMove(2,2, Cell.Owner.BLUE));
+		System.out.println(grid.validMove(2,3, Cell.Owner.BLUE));
+		System.out.println(grid.validMove(2,5, Cell.Owner.BLUE));
+		System.out.println(grid.validMove(4,5, Cell.Owner.BLUE));
+		System.out.println(grid.validMove(5,5, Cell.Owner.BLUE));
+		System.out.println(grid.validMove(5,4, Cell.Owner.BLUE));
+		System.out.println(grid.validMove(5,2, Cell.Owner.BLUE));
+		System.out.println(grid.validMove(3,2, Cell.Owner.BLUE));
+		
+		for(Move move : grid.getPossibleTurns(Cell.Owner.BLUE))
+			System.out.println("( " + move.i + ", " + move.j + " )");
+		
+		grid.addTurn(new Move(4,2), Cell.Owner.BLUE);
+		System.out.println("------------------------");
+		System.out.println(grid);
+		
+		System.out.println("BLUE possible turns: ");
+		for(Move move : grid.getPossibleTurns(Cell.Owner.BLUE))
+			System.out.println("( " + move.i + ", " + move.j + " )");
+        
+		System.out.println("RED possible turns: ");
+		for(Move move : grid.getPossibleTurns(Cell.Owner.RED))
+			System.out.println("( " + move.i + ", " + move.j + " )");
+		
+		
+		
+		
+		grid.addTurn(new Move(5,2), Cell.Owner.RED);
+		System.out.println("------------------------");
+		System.out.println(grid);
+		
+		System.out.println("BLUE possible turns: ");
+		for(Move move : grid.getPossibleTurns(Cell.Owner.BLUE))
+			System.out.println("( " + move.i + ", " + move.j + " )");
+        
+		System.out.println("RED possible turns: ");
+		for(Move move : grid.getPossibleTurns(Cell.Owner.RED))
+			System.out.println("( " + move.i + ", " + move.j + " )");
+			
+		
+		grid.addTurn(new Move(5,3), Cell.Owner.BLUE);
+		System.out.println("------------------------");
+		System.out.println(grid);
+		
+		System.out.println("BLUE possible turns: ");
+		for(Move move : grid.getPossibleTurns(Cell.Owner.BLUE))
+			System.out.println("( " + move.i + ", " + move.j + " )");
+        
+		System.out.println("RED possible turns: ");
+		for(Move move : grid.getPossibleTurns(Cell.Owner.RED))
+			System.out.println("( " + move.i + ", " + move.j + " )");
+			
+		
+		
+		grid.addTurn(new Move(3,2), Cell.Owner.RED);
+		System.out.println("------------------------");
+		System.out.println(grid);
+		
+		System.out.println("BLUE possible turns: ");
+		for(Move move : grid.getPossibleTurns(Cell.Owner.BLUE))
+			System.out.println("( " + move.i + ", " + move.j + " )");
+        
+		System.out.println("RED possible turns: ");
+		for(Move move : grid.getPossibleTurns(Cell.Owner.RED))
+			System.out.println("( " + move.i + ", " + move.j + " )");
+		
 	}
 
 	/**********************************
@@ -168,13 +268,36 @@ public class Grid
 	public String toString()
 	{
 		StringBuilder sb = new StringBuilder();
+		
+		if(cells.length>0)
+		{
+			sb.append(" ");
+			for(int j = 0; j < cells[0].length; j++)
+				sb.append("|" + j);
+			sb.append("\n");
+		}
 		for(int i = 0; i < cells.length; ++i)
 		{
+			sb.append(i);
 			for(int j = 0; j < cells[i].length; ++j)
 			{
-				sb.append("|"  + cells[i][j].getOwner());
+				switch(cells[i][j].getOwner())
+				{
+				case RED:
+					sb.append("|R");
+					break;
+				case BLUE:
+					sb.append("|B");
+					break;
+				case UNDEF:
+					sb.append("| ");
+					break;
+				default:
+					break;
+				}
+				
 			}
-			sb.append("\n");
+			sb.append("|\n");
 		}
 		sb.append("\n");
 		
@@ -196,67 +319,14 @@ public class Grid
 	{
 		List<Move> ops = new ArrayList<Move>();
 		
-		Cell.Owner adversary = Cell.Owner.RED == owner ? Cell.Owner.BLUE : Cell.Owner.RED;
 		
 		for(int i = 0; i < size; ++i)
 		{
 			for(int j = 0; j < size; ++j)
 			{
-				if(getSouth(i, j) != null && getSouth(i, j).getOwner() == adversary)
+				if(validMove(i, j, owner))
 				{
-					if(checkSouthLineForOwner(i, j, owner))
-					{
-						ops.add(new Move(i,j));
-					}
-				}
-				else if(getSouthWest(i, j) != null && getSouthWest(i, j).getOwner() == adversary)
-				{
-					if(checkSouthWestLineForOwner(i, j, owner))
-					{
-						ops.add(new Move(i,j));
-					}
-				}
-				else if(getWest(i, j) != null && getWest(i, j).getOwner() == adversary)
-				{
-					if(checkWestLineForOwner(i, j, owner))
-					{
-						ops.add(new Move(i,j));
-					}
-				}
-				else if(getNorthWest(i, j) != null && getNorthWest(i, j).getOwner() == adversary)
-				{
-					if(checkNorthWestLineForOwner(i, j, owner))
-					{
-						ops.add(new Move(i,j));
-					}
-				}
-				else if(getNorth(i, j) != null && getNorth(i, j).getOwner() == adversary)
-				{
-					if(checkNorthLineForOwner(i, j, owner))
-					{
-						ops.add(new Move(i,j));
-					}
-				}
-				else if(getNorthEast(i, j) != null && getNorthEast(i, j).getOwner() == adversary)
-				{
-					if(checkNorthEastLineForOwner(i, j, owner))
-					{
-						ops.add(new Move(i,j));
-					}
-				}
-				else if(getEast(i, j) != null && getEast(i, j).getOwner() == adversary)
-				{
-					if(checkEastLineForOwner(i, j, owner))
-					{
-						ops.add(new Move(i,j));
-					}
-				}
-				else if(getSouthEast(i, j) != null && getEast(i, j).getOwner() == adversary)
-				{
-					if(checkSouthEastLineForOwner(i, j, owner))
-					{
-						ops.add(new Move(i,j));
-					}
+					ops.add(new Move(i,j));
 				}
 			}
 		}
@@ -264,19 +334,110 @@ public class Grid
 		return ops;
 	}
 	
+	public boolean validMove(int i, int j, Cell.Owner owner)
+	{
+		Cell.Owner adversary = Cell.getAdversary(owner);
+		
+		if(getCell(i, j) == null || getCell(i,j).getOwner() != Cell.Owner.UNDEF)
+			return false;
+
+		if(getSouth(i, j) != null && getSouth(i, j).getOwner() == adversary)
+		{
+			if(checkSouthLineForOwner(i, j, owner))
+			{
+				return true;
+			}
+		}
+		if(getSouthWest(i, j) != null && getSouthWest(i, j).getOwner() == adversary)
+		{
+			if(checkSouthWestLineForOwner(i, j, owner))
+			{
+				return true;
+			}
+		}
+		if(getWest(i, j) != null && getWest(i, j).getOwner() == adversary)
+		{
+			if(checkWestLineForOwner(i, j, owner))
+			{
+				return true;
+			}
+		}
+		if(getNorthWest(i, j) != null && getNorthWest(i, j).getOwner() == adversary)
+		{
+			if(checkNorthWestLineForOwner(i, j, owner))
+			{
+				return true;
+			}
+		}
+		if(getNorth(i, j) != null && getNorth(i, j).getOwner() == adversary)
+		{
+			if(checkNorthLineForOwner(i, j, owner))
+			{
+				return true;
+			}
+		}
+		if(getNorthEast(i, j) != null && getNorthEast(i, j).getOwner() == adversary)
+		{
+			if(checkNorthEastLineForOwner(i, j, owner))
+			{
+				return true;
+			}
+		}
+		if(getEast(i, j) != null && getEast(i, j).getOwner() == adversary)
+		{
+			if(checkEastLineForOwner(i, j, owner))
+			{
+				return true;
+			}
+		}
+		if(getSouthEast(i, j) != null && getSouthEast(i, j).getOwner() == adversary)
+		{
+			if(checkSouthEastLineForOwner(i, j, owner))
+			{
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
 	public void addTurn(Move move, Cell.Owner owner)
 	{
-		Cell cell = getCell(move.i, move.j);
-		
-		if(cell != null)
-			cell.setOwner(owner);
+		if(validMove(move.i, move.j, owner))
+		{
+			Cell cell = getCell(move.i, move.j);
+			
+			if(cell != null)
+			{
+				cell.setOwner(owner);
+				
+				swapNorthCells(cell, owner);
+				swapNorthEastCells(cell, owner);
+				swapEastCells(cell, owner);
+				swapSouthEastCells(cell, owner);
+				swapSouthCells(cell, owner);
+				swapSouthWestCells(cell, owner);
+				swapWestCells(cell, owner);
+				swapNorthWestCells(cell, owner);
+			}
+		}
 	}
 
 	
 	/**********************************
 	 * Getter/Setter
 	 **********************************/
-	 
+	 	
+	public Cell getCell(int i, int j)
+	{
+		if(0 <= i && i < this.cells.length
+			&& 0 <= j && j < this.cells[i].length )
+		{
+			return cells[i][j];
+		}
+		
+		return null;
+	}
 	 	
 	/**********************************
 	 * private methods
@@ -292,17 +453,6 @@ public class Grid
 				this.cells[i][j] = new Cell(i, j);
 			}
 		}
-	}
-	
-	private Cell getCell(int i, int j)
-	{
-		if(0 <= i && i < this.cells.length
-			&& 0 <= j && j < this.cells[i].length )
-		{
-			return cells[i][j];
-		}
-		
-		return null;
 	}
 	
 	private Cell getNorth(int i, int j)
@@ -447,6 +597,173 @@ public class Grid
 			return checkSouthEastLineForOwner(cell.getI(), cell.getJ(), owner);
 		else
 			return false;
+	}
+	
+	private boolean swapNorthCells(Cell cell, Cell.Owner targetOwner)
+	{
+		Cell next = getNorth(cell.getI(), cell.getJ());
+		Cell.Owner adversary = Cell.getAdversary(targetOwner);
+		
+		if(next == null)
+			return false;
+			
+		if(next.getOwner() == adversary)
+		{
+			boolean adversaryFound = swapNorthCells(next, targetOwner);
+			
+			if(adversaryFound)
+				next.setOwner(targetOwner);
+			
+			return adversaryFound;
+		}
+		
+		return (next.getOwner() == targetOwner);
+	}
+	private boolean swapNorthEastCells(Cell cell, Cell.Owner targetOwner)
+	{
+		Cell next = getNorthEast(cell.getI(), cell.getJ());
+		Cell.Owner adversary = Cell.getAdversary(targetOwner);
+		
+		if(next == null)
+			return false;
+			
+		if(next.getOwner() == adversary)
+		{
+			boolean adversaryFound = swapNorthEastCells(next, targetOwner);
+			
+			if(adversaryFound)
+				next.setOwner(targetOwner);
+			
+			return adversaryFound;
+		}
+		
+		return (next.getOwner() == targetOwner);
+	}
+	
+	private boolean swapEastCells(Cell cell, Cell.Owner targetOwner)
+	{
+		Cell next = getEast(cell.getI(), cell.getJ());
+		Cell.Owner adversary = Cell.getAdversary(targetOwner);
+		
+		if(next == null)
+			return false;
+			
+		if(next.getOwner() == adversary)
+		{
+			boolean adversaryFound = swapEastCells(next, targetOwner);
+			
+			if(adversaryFound)
+				next.setOwner(targetOwner);
+			
+			return adversaryFound;
+		}
+		
+		return (next.getOwner() == targetOwner);
+	}
+	
+	private boolean swapSouthEastCells(Cell cell, Cell.Owner targetOwner)
+	{
+		Cell next = getSouthEast(cell.getI(), cell.getJ());
+		Cell.Owner adversary = Cell.getAdversary(targetOwner);
+		
+		if(next == null)
+			return false;
+			
+		if(next.getOwner() == adversary)
+		{
+			boolean adversaryFound = swapSouthEastCells(next, targetOwner);
+			
+			if(adversaryFound)
+				next.setOwner(targetOwner);
+			
+			return adversaryFound;
+		}
+		
+		return (next.getOwner() == targetOwner);
+	}
+	
+	private boolean swapSouthCells(Cell cell, Cell.Owner targetOwner)
+	{
+		Cell next = getSouth(cell.getI(), cell.getJ());
+		Cell.Owner adversary = Cell.getAdversary(targetOwner);
+		
+		if(next == null)
+			return false;
+			
+		if(next.getOwner() == adversary)
+		{
+			boolean adversaryFound = swapSouthCells(next, targetOwner);
+			
+			if(adversaryFound)
+				next.setOwner(targetOwner);
+			
+			return adversaryFound;
+		}
+		
+		return (next.getOwner() == targetOwner);
+	}
+	
+	private boolean swapSouthWestCells(Cell cell, Cell.Owner targetOwner)
+	{
+		Cell next = getSouthWest(cell.getI(), cell.getJ());
+		Cell.Owner adversary = Cell.getAdversary(targetOwner);
+		
+		if(next == null)
+			return false;
+			
+		if(next.getOwner() == adversary)
+		{
+			boolean adversaryFound = swapSouthWestCells(next, targetOwner);
+			
+			if(adversaryFound)
+				next.setOwner(targetOwner);
+			
+			return adversaryFound;
+		}
+		
+		return (next.getOwner() == targetOwner);
+	}
+	
+	private boolean swapWestCells(Cell cell, Cell.Owner targetOwner)
+	{
+		Cell next = getWest(cell.getI(), cell.getJ());
+		Cell.Owner adversary = Cell.getAdversary(targetOwner);
+		
+		if(next == null)
+			return false;
+			
+		if(next.getOwner() == adversary)
+		{
+			boolean adversaryFound = swapWestCells(next, targetOwner);
+			
+			if(adversaryFound)
+				next.setOwner(targetOwner);
+			
+			return adversaryFound;
+		}
+		
+		return (next.getOwner() == targetOwner);
+	}
+	
+	private boolean swapNorthWestCells(Cell cell, Cell.Owner targetOwner)
+	{
+		Cell next = getNorthWest(cell.getI(), cell.getJ());
+		Cell.Owner adversary = Cell.getAdversary(targetOwner);
+		
+		if(next == null)
+			return false;
+			
+		if(next.getOwner() == adversary)
+		{
+			boolean adversaryFound = swapNorthWestCells(next, targetOwner);
+			
+			if(adversaryFound)
+				next.setOwner(targetOwner);
+			
+			return adversaryFound;
+		}
+		
+		return (next.getOwner() == targetOwner);
 	}
 	
 	/**********************************

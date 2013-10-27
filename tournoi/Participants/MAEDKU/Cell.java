@@ -6,6 +6,11 @@ public class Cell
 	{
 		RED, BLUE, UNDEF
 	}
+	
+	public static Owner getAdversary(Owner owner)
+	{
+		return owner == Cell.Owner.RED ? Cell.Owner.BLUE : Cell.Owner.RED;
+	}
 
 	/**********************************
 	 * Constructor
