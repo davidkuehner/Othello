@@ -18,9 +18,34 @@ public class Grid
 		initGrid();
 	}
 	
+	public Grid(Grid grid)
+	{
+		this.size = grid.size;
+		this.cells = new Cell[this.size*this.size];
+		
+		for(int i = 0; i < this.size; ++i)
+		{
+			for(int j = 0; j < this.size; j++)
+			{
+				this.cells[i*j] = new Cell(grid.cells[i*j]);
+			}
+		}
+	}
+	
 	/**********************************
 	 * Public methods
 	 **********************************/
+	
+	@Override
+	public Object clone()
+	{
+		return cloneOf();
+	}
+	
+	public Grid cloneOf()
+	{
+		return new Grid(this);
+	}
 	
 	public List<Move> getPossibleTurns(Cell.Owner owner)
 	{
@@ -97,11 +122,7 @@ public class Grid
 	public void addTurn(Move move, Cell.Owner owner)
 	{
 	}
-	
-	public Grid copyOf()
-	{
-		return null;
-	}
+
 	
 	/**********************************
 	 * Getter/Setter

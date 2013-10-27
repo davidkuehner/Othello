@@ -31,7 +31,7 @@ public class Node
 	
 	public Node apply(Move move)
 	{
-		Grid newGrid = this.grid.copyOf();
+		Grid newGrid = this.grid.cloneOf();
 		newGrid.addTurn(move, owner);
 		return new Node(newGrid, owner == Cell.Owner.RED ? Cell.Owner.BLUE : Cell.Owner.RED );
 	}

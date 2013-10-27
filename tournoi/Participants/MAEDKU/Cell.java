@@ -22,6 +22,11 @@ public class Cell
 		this(row, column, Owner.UNDEF);
 	}
 	
+	public Cell(Cell cell)
+	{
+		this(cell.row, cell.column, cell.owner);
+	}
+	
 	/**********************************
 	 * Getter/Setter
 	 **********************************/
