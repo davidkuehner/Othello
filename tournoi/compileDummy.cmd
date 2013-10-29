@@ -1,0 +1,1 @@
+javac Othello\Move.java Othello\Joueur.java Participants\Console\Joueur.java Participants\dummy\*.java
