@@ -69,6 +69,7 @@ public class Joueur extends Othello.Joueur
 	{
 		if(depth == 0 || node.isGameOver())
 		{
+			//return new MinMaxResult(null, node.eval());
 			return new MinMaxResult(null, node.eval());
 		}
 		

@@ -428,6 +428,41 @@ public class Grid
 			throw new InvalidMoveException(move, owner);
 		}
 	}
+	
+	public boolean isEdge(int i, int j)
+	{
+		return( i == 0 || 
+					i == size-1 ||
+					j == 0 ||
+					j == size -1 );
+	}
+	
+	public int boundaryLevel(int i, int j)
+	{
+		int count = 0;
+		
+		Cell cell = getNorth(i,j);
+		if ( cell != null )
+			if (cell.getOwner() == Cell.Owner.UNDEF )
+				count++;
+		
+		cell = getSouth(i,j);
+		if( cell != null )
+			if ( cell.getOwner() == Cell.Owner.UNDEF )
+				count++;
+				
+		cell = getEast(i,j);
+		if( cell != null)
+			if ( cell.getOwner() == Cell.Owner.UNDEF )
+				count++;
+				
+		cell = getWest(i,j);
+		if( cell != null)
+			if ( cell.getOwner() == Cell.Owner.UNDEF )
+				count++;
+		
+		return count;
+	}
 
 	
 	/**********************************
@@ -444,6 +479,25 @@ public class Grid
 		
 		return null;
 	}
+	
+	public int getSize()
+	{
+		return this.size;
+	}
+	
+	public int countCellOfOwner(Cell.Owner owner)
+    {
+        int count = 0;
+        for(int j = 0; j < size; j++)
+        {
+            for(int i = 0; i < size; i++)
+            {
+                if(getCell(i, j).getOwner() == owner)
+                    count++;
+            }
+        }
+        return count;
+    }
 	 	
 	/**********************************
 	 * private methods
