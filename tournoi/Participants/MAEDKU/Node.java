@@ -7,6 +7,7 @@ public class Node
 {
 	private Grid grid;
 	private Cell.Owner owner;
+	private Cell.Owner advColor;
 	private Move lastMove;
 	private Node parent;
 	private int parentNbAdvMove;
@@ -16,6 +17,7 @@ public class Node
 	{
 		this.grid = grid;
 		this.owner = owner;
+		this.advColor = Cell.Owner.RED == owner ? Cell.Owner.BLUE : Cell.Owner.RED;
 		this.lastMove = null;
 		this.parentNbAdvMove = 0;
 	}
@@ -46,6 +48,52 @@ public class Node
 		return values[i][j];
 	}
 	
+	
+
+	
+	/*switch grid  as http://www.csse.uwa.edu.au/cig08/Proceedings/papers/8010.pdf*/
+	public int evalSwitchGrid()
+	{
+		int i = lastMove.i;
+		int j = lastMove.j;
+		int size = grid.getSize();
+		int cells = size*2;
+				
+		if ( cells - grid.countOfEmptyCell() <= 21 ) {
+			int opening[][] = {{0, 0, 0, 0, 0, 0, 0, 0},
+								{0, -2231, 5583, 2004, 2004, 5583, -2231, 0},
+								{0, 5583, 10126, -10927, -10927, 10126, 5583, 0},
+								{0, 2004, -10927, -10155, -10155, -10927, 2004, 0},
+								{0, 2004, -10927, -10155, -10155, -10927, 2004, 0},
+								{0, 5583, 10126, -10927, -10927, 10126, 5583, 0},
+								{0, -2231, 5583, 2004, 2004, 5583, -2231, 0},
+								{0, 0, 0, 0, 0, 0, 0, 0} };
+			return opening[i][j];
+		}
+		else if ( cells - grid.countOfEmptyCell() <= 42 ) {
+			int middle[][] = {{ 632711, -332813, 33907, -200512, -200512, 33907, -332813, 632711},
+								{-332813, -152928, -187550, -18176, -18176, -187550, -152928, -332813},
+								{33907, -187550, 106939, 62415, 62415, 106939, -187550, 33907},
+								{-200512, -18176, 62415, 10539, 10539, 62415, -18176, -200512},
+								{-200512, -18176, 62415, 10539, 10539, 62415, -18176, -200512},
+								{33907, -187550, 106939, 62415, 62415, 106939, -187550, 33907},
+								{-332813, -152928, -187550, -18176, -18176, -187550, -152928, -332813},
+								{632711, -332813, 33907, -200512, -200512, 33907, -332813, 632711}};
+			return middle[i][j];
+		} 
+		else {
+			int ending[][] = { { 550062, -17812, -258948, -59007, -59007, -258948, -17812, 550062},
+								{-17812, 96804, -216084, -201723, -201723, -216084, 96804, -17812},
+								{-258948, -216084, 49062, -107055, -107055, 49062, -216084, -258948},
+								{-59007, -201723, -107055, 73486, 73486, -107055, -201723, -59007},
+								{-59007, -201723, -107055, 73486, 73486, -107055, -201723, -59007},
+								{-258948, -216084, 49062, -107055, -107055, 49062, -216084, -258948},
+								{-17812, 96804, -216084, -201723, -201723, -216084, 96804, -17812},
+								{550062, -17812, -258948, -59007, -59007, -258948, -17812, 550062}};
+			return ending[i][j];
+		}
+	}
+	
 	// this eval mix grid and strategy
 	public int eval()
 	{
@@ -63,8 +111,10 @@ public class Node
 		int f = 3;		// bof position ^^
 		int g = 4;		// bof position bis
 		
-		double factMove = 0.2;
-		double factCell = 0.2;
+		int oddMalus = 0;
+		
+		double factMove = 3;
+		double factCell = 3;
 		
 		int values[][] = { {  a,  c,  b,  e,  e,  b,  c,  a  },
 						   {  c,  x,  d,  f,  f,  d,  x,  c  },
@@ -78,12 +128,16 @@ public class Node
 		int grade = values[i][j];
 
 		// checks if the number of advMoves decreace or not
-		int debug = (int)factMove * ( parentNbAdvMove - grid.getPossibleTurns(owner).size() );
+		int debug = (int)factMove * ( parentNbAdvMove - grid.getPossibleTurns(advColor).size() );
 		grade += debug;
 		
 		// checks if the number of cell decreace or not
 		debug = (int)factCell * ( parentNbCell - grid.countCellOfOwner(owner) );
 		grade += debug;
+		
+		// checks if the sum of the empty cell is odd (paire) = bad :'(
+		if ( grid.isCountOfEmptyCellOdd() )
+			grade += oddMalus;
 		
 		return grade;
 	}

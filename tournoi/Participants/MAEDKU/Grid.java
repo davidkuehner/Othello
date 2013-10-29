@@ -498,6 +498,34 @@ public class Grid
         }
         return count;
     }
+	
+	public boolean isCountOfEmptyCellOdd()
+    {
+        int count = 0;
+        for(int j = 0; j < size; j++)
+        {
+            for(int i = 0; i < size; i++)
+            {
+                if(getCell(i, j).getOwner() == Cell.Owner.UNDEF)
+                    count++;
+            }
+        }
+        return count % 2 != 0;
+    }
+	
+	public int countOfEmptyCell()
+    {
+        int count = 0;
+        for(int j = 0; j < size; j++)
+        {
+            for(int i = 0; i < size; i++)
+            {
+                if(getCell(i, j).getOwner() == Cell.Owner.UNDEF)
+                    count++;
+            }
+        }
+        return count;
+    }
 	 	
 	/**********************************
 	 * private methods
