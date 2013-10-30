@@ -239,16 +239,8 @@ public class Node
 	{
 		Grid newGrid = this.grid.cloneOf();
 		
-		try
-		{
-			newGrid.addTurn(move, owner);
-		}
-		catch(InvalidMoveException exception)
-		{
-			System.out.println("[MAEDKU] ouwou, we have catched an exception which shouldn't occure.");
-			System.out.println("[MAEDKU] We have extracted this move...:(.");
-			System.out.println("[MAEDKU] The cause is: " + exception.getMessage());
-		}
+		newGrid.addTurn(move, owner);
+		
 		Node newNode = new Node(newGrid, Cell.getAdversary(owner));
 		newNode.setLastMove(move);
 		newNode.setParentNbAdvMove(this.grid.getPossibleTurns(owner).size());
