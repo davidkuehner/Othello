@@ -200,6 +200,40 @@ public class Grid
 					j == 0 ||
 					j == size -1 );
 	}
+
+	public boolean isEndingState()
+	{
+		// Ending State: two cells in the corners with the same color
+		int n = size-1;
+		return (
+				   (getCell(0,0).getOwner() == getCell(n,0).getOwner() && getCell(0,0).getOwner() != Cell.Owner.UNDEF )
+				|| (getCell(0,0).getOwner() == getCell(n,n).getOwner() && getCell(0,0).getOwner() != Cell.Owner.UNDEF )
+				|| (getCell(0,0).getOwner() == getCell(0,n).getOwner() && getCell(0,0).getOwner() != Cell.Owner.UNDEF )
+				|| (getCell(n,0).getOwner() == getCell(n,n).getOwner() && getCell(n,0).getOwner() != Cell.Owner.UNDEF )
+				|| (getCell(n,0).getOwner() == getCell(0,n).getOwner() && getCell(n,0).getOwner() != Cell.Owner.UNDEF )
+				|| (getCell(n,n).getOwner() == getCell(0,n).getOwner() && getCell(n,n).getOwner() != Cell.Owner.UNDEF )
+				);
+	}
+	
+	public boolean isMiddleState()
+	{
+		// Middle State: at least one cell on the edge not empty.
+		for(int j = 0; j<size; j++)
+		{
+			if(getCell(0,j).getOwner() != Cell.Owner.UNDEF
+				|| getCell(size-1,j).getOwner() != Cell.Owner.UNDEF)
+				return true;
+		}
+		
+		for(int i = 0; i<size; i++)
+		{
+			if(getCell(i,0).getOwner() != Cell.Owner.UNDEF
+				|| getCell(i,size-1).getOwner() != Cell.Owner.UNDEF)
+				return true;
+		}
+		
+		return false;
+	}
 	
 	public int boundaryLevel(int i, int j)
 	{
@@ -227,7 +261,6 @@ public class Grid
 		
 		return count;
 	}
-
 	
 	/**********************************
 	 * Getter/Setter
@@ -265,16 +298,7 @@ public class Grid
 	
 	public boolean isCountOfEmptyCellOdd()
     {
-        int count = 0;
-        for(int j = 0; j < size; j++)
-        {
-            for(int i = 0; i < size; i++)
-            {
-                if(getCell(i, j).getOwner() == Cell.Owner.UNDEF)
-                    count++;
-            }
-        }
-        return count % 2 != 0;
+        return countOfEmptyCell() % 2 != 0;
     }
 	
 	public int countOfEmptyCell()

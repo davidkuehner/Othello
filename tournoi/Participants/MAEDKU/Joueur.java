@@ -32,22 +32,21 @@ public class Joueur extends Othello.Joueur
 
 	public Move nextPlay(Move move)
 	{
+		int parentAdvCellCount = this.grid.countCellOfOwner(advcolor);
+		int parentAdvMoveCount = this.grid.getPossibleTurns(mycolor).size();
+		
 		if(move!=null)
 			grid.addTurn(move, advcolor);
 		
-		Move mymove = minmax();
+		Node root = new Node(this.grid, mycolor, parentAdvCellCount, parentAdvMoveCount);
+		MinMaxResult res = alphabeta(root, this.depth, true, Integer.MAX_VALUE);
 		
-		if(mymove!=null)
-			grid.addTurn(mymove, mycolor);
+		if(res.getMove() != null)
+			grid.addTurn(res.getMove(), mycolor);
 		
-		return mymove;
-	}
-	
-	private Move minmax()
-	{
-		MinMaxResult res = alphabeta(new Node(this.grid, mycolor), this.depth, true, Integer.MIN_VALUE);
 		return res.getMove();
 	}
+	
 	
 	private MinMaxResult alphabeta(Node node, int depth, boolean maximize, int parentValue)
 	{
