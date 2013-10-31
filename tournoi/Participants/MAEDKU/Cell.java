@@ -1,5 +1,12 @@
 package Participants.MAEDKU;
 
+/***
+ * The cell class represent a cell with an row, column and owner indicator.
+ *
+ * The columns are the i values, the rows the j and the owner can be RED, BLUE or UNDEFined.
+ *
+ * @author: David Kuehner (david.kuehner@he-arc.ch), Marco Aeberli (marco.aeberli@he-arc.ch)
+ */
 public class Cell
 {
 	public enum Owner 
@@ -15,6 +22,7 @@ public class Cell
 	/**********************************
 	 * Constructor
 	 **********************************/
+	 
 	public Cell(int i, int j, Owner owner)
 	{
 		this.i = i;
