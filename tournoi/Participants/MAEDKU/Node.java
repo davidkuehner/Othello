@@ -35,7 +35,14 @@ public class Node
 		int j = lastMove.j;
 		int size = grid.getSize();
 		int cells = size*2;
-				
+		int grade = 0;
+		
+		// factors for differents evaluation parties
+		int boundaryFactor = 1000;
+		int advMoveFactor = 100;
+		int oddFactor = 1000;
+		int advCellFactor = 150;
+		
 		if( grid.isEndingState() ) {
 			// Ending State: two cells in the corners with the same color
 			int ending[][] = { { 550062, -17812, -258948, -59007, -59007, -258948, -17812, 550062},
@@ -46,7 +53,15 @@ public class Node
 								{-258948, -216084, 49062, -107055, -107055, 49062, -216084, -258948},
 								{-17812, 96804, -216084, -201723, -201723, -216084, 96804, -17812},
 								{550062, -17812, -258948, -59007, -59007, -258948, -17812, 550062}};
-			return ending[i][j];
+			grade = ending[i][j];
+			
+		    // Check if the number of empty resting cells is odd.
+		    // If it's odd the last move will be for the adversary --> generally bad...
+		    int odd = (grid.isCountOfEmptyCellOdd() ? 1 : 0);
+		    grade -= odd * oddFactor;
+			
+			
+			grade += advCellFactor * (parentAdvCellCount - grid.countCellOfOwner(advColor));
 		}
 		else if (grid.isMiddleState()) {
 			// Middle State: at least one cell on the edge not empty.
@@ -58,7 +73,7 @@ public class Node
 								{33907, -187550, 106939, 62415, 62415, 106939, -187550, 33907},
 								{-332813, -152928, -187550, -18176, -18176, -187550, -152928, -332813},
 								{632711, -332813, 33907, -200512, -200512, 33907, -332813, 632711}};
-			return middle[i][j];
+			grade = middle[i][j];
 		} 
 		else {
 			int opening[][] = { {0, 0,        0,    0,    0,    0,    0,   0},
@@ -69,8 +84,18 @@ public class Node
 								{0, 5583, 10126, -10927, -10927, 10126, 5583, 0},
 								{0, -2231, 5583, 2004, 2004, 5583, -2231, 0},
 								{0, 0, 0, 0, 0, 0, 0, 0} };
-			return opening[i][j];
+			grade = opening[i][j];
 		}
+		
+		// check neighbours, more items around the move is better
+		// Value between 0 and 4
+		grade -= boundaryFactor * grid.boundaryLevel(i, j);
+		
+		// Compare the possible moves of the adversary before the last move and after
+		int difference = this.parentAdvMoveCount - this.grid.getPossibleTurns(advColor).size();
+		grade += advMoveFactor * difference;
+		
+		return grade;
 	}
 	
 	public boolean isGameOver()
