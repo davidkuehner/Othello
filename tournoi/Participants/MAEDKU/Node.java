@@ -7,7 +7,7 @@ import java.util.List;
  * This class represents a node in the evaluation tree.
  * 
  * To be able to determine the strength of a node some information are necessary.
- * These information are also associated and available int this class.
+ * These information are also associated and available in this class.
  *
  * @author: David Kuehner (david.kuehner@he-arc.ch), Marco Aeberli (marco.aeberli@he-arc.ch)
  */
@@ -41,7 +41,7 @@ public class Node
 		/*
 		The main idea to use different grids for different game situations came from http://www.csse.uwa.edu.au/cig08/Proceedings/papers/8010.pdf
 		Based on this evaluation grids, we have added some parameteres which could optimize the evaluation.
-		Afterwards we didn't had the passion in this subhect to invest a lot of hours for the optimization.
+		Afterwards we didn't had the passion in this subject to invest a lot of hours for the optimization.
 		Our factors are selected not totally by random, but they aren't based on many tests and research too...
 		
 		Two indicators - number of free empty cell is odd and the number of cells lost/won - are only evaluated when the game is in the ending phase.
@@ -52,7 +52,7 @@ public class Node
 		int cells = size*2;
 		int grade = 0;
 		
-		// factors for differents evaluation parties
+		// factors for different evaluation parties
 		int boundaryFactor = 1000;
 		int advMoveFactor = 100;
 		int oddFactor = 1000;
