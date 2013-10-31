@@ -3,7 +3,7 @@ package Participants.MAEDKU;
 import Othello.Move;
 
 /**
- * The Joueur class contains merges the diferent parts to build an "intelligent" Othello player.
+ * The Joueur class contains merges the different parts to build an "intelligent" Othello player.
  *
  * 
  *

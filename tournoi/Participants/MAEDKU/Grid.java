@@ -8,7 +8,7 @@ import java.util.List;
  * A grid represents a othello playing field with a variable size.
  *
  * The grid is initialized by default with all the cells to a UNDEFined owner.
- * Moves can be applied to an existant grid with the method addTurn(...).
+ * Moves can be applied to an existent grid with the method addTurn(...).
  * 
  * @author: David Kuehner (david.kuehner@he-arc.ch), Marco Aeberli (marco.aeberli@he-arc.ch)
  */
