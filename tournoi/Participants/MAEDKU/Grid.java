@@ -4,6 +4,14 @@ import Othello.Move;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A grid represents a othello playing field with a variable size.
+ *
+ * The grid is initialized by default with all the cells to a UNDEFined owner.
+ * Moves can be applied to an existant grid with the method addTurn(...).
+ * 
+ * @author: David Kuehner (david.kuehner@he-arc.ch), Marco Aeberli (marco.aeberli@he-arc.ch)
+ */
 public class Grid
 {
 	/**********************************
@@ -14,9 +22,13 @@ public class Grid
 	{
 		this.size = size;
 		
+		// Create the cells and set them to a UNDEF owner.
 		initGrid();
 	}
 	
+	/**
+	 * Copy constructor allows to create a deep copy of a grid.
+	 */
 	public Grid(Grid grid)
 	{
 		this.size = grid.size;
@@ -193,12 +205,15 @@ public class Grid
 		}
 	}
 	
+	/**
+	 * @return Returns true if the Cell (i,j) is one of the four edges.
+	 */
 	public boolean isEdge(int i, int j)
 	{
 		return( i == 0 || 
-					i == size-1 ||
-					j == 0 ||
-					j == size -1 );
+				i == size-1 ||
+				j == 0 ||
+				j == size -1 );
 	}
 
 	public boolean isEndingState()
@@ -261,10 +276,6 @@ public class Grid
 		
 		return count;
 	}
-	
-	/**********************************
-	 * Getter/Setter
-	 **********************************/
 	 	
 	public Cell getCell(int i, int j)
 	{
@@ -495,6 +506,7 @@ public class Grid
 		
 		return (next.getOwner() == targetOwner);
 	}
+	
 	private boolean swapNorthEastCells(Cell cell, Cell.Owner targetOwner)
 	{
 		Cell next = getNorthEast(cell.getI(), cell.getJ());
