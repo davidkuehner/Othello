@@ -3,20 +3,25 @@ package Participants.MAEDKU;
 import Othello.Move;
 import java.util.List;
 
+/***
+ * This class represents a node in the evaluation tree.
+ * 
+ * To be able to determine the strength of a node some information are necessary.
+ * These information are also associated and available int this class.
+ *
+ * @author: David Kuehner (david.kuehner@he-arc.ch), Marco Aeberli (marco.aeberli@he-arc.ch)
+ */
 public class Node
 {
-	private Grid grid;
-	private Cell.Owner owner;
-	private Cell.Owner advColor;
-	private Move lastMove;
-	private int parentAdvCellCount;
-	private int parentAdvMoveCount;
-	
+	/**********************************
+	 * Constructor
+	 **********************************/
+
 	public Node(Grid grid, Cell.Owner owner, int parentAdvCellCount, int parentAdvMoveCount)
 	{
 		this(grid, owner, null, parentAdvCellCount, parentAdvMoveCount);
 	}
-
+	
 	public Node(Grid grid, Cell.Owner owner, Move lastMove, int parentAdvCellCount, int parentAdvMoveCount)
 	{
 		this.grid = grid;
@@ -27,10 +32,20 @@ public class Node
 		this.parentAdvMoveCount = parentAdvMoveCount;
 	}
 
-	
-	/*switch grid  as http://www.csse.uwa.edu.au/cig08/Proceedings/papers/8010.pdf*/
+	/**********************************
+	 * Public methods
+	 **********************************/
+	 
 	public int eval()
 	{
+		/*
+		The main idea to use different grids for different game situations came from http://www.csse.uwa.edu.au/cig08/Proceedings/papers/8010.pdf
+		Based on this evaluation grids, we have added some parameteres which could optimize the evaluation.
+		Afterwards we didn't had the passion in this subhect to invest a lot of hours for the optimization.
+		Our factors are selected not totally by random, but they aren't based on many tests and research too...
+		
+		Two indicators - number of free empty cell is odd and the number of cells lost/won - are only evaluated when the game is in the ending phase.
+		*/
 		int i = lastMove.i;
 		int j = lastMove.j;
 		int size = grid.getSize();
@@ -112,16 +127,32 @@ public class Node
 
 	public Node apply(Move move)
 	{
+		// Copy the current grid
 		Grid newGrid = this.grid.cloneOf();
 		
+		// apply the move, have to be a valid one, to the new generated grid.
 		newGrid.addTurn(move, owner);
 		
+		// Save some informations which are necessary for the new created node
 		Cell.Owner adversary = Cell.getAdversary(owner);
 		int parentAdvCellCount = this.grid.countCellOfOwner(adversary);
 		int parentAdvMoveCount = this.grid.getPossibleTurns(adversary).size();
 		
+		// Create the new node and return it.
 		Node newNode = new Node(newGrid, adversary, move, parentAdvCellCount, parentAdvMoveCount);
 		
 		return newNode;
 	}
+	
+	/**********************************
+	 * Variables
+	 **********************************/
+	
+	// inputs
+	private Grid grid;
+	private Cell.Owner owner;
+	private Cell.Owner advColor;
+	private Move lastMove;
+	private int parentAdvCellCount;
+	private int parentAdvMoveCount;
 }
