@@ -1,4 +1,4 @@
-package Participants.MAEDKU;
+package Participants.AeberliKuehner;
 
 /***
  * The cell class represent a cell with an row, column and owner indicator.

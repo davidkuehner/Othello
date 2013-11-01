@@ -1,1 +1,1 @@
-javac Othello\Move.java Othello\Joueur.java Participants\Console\Joueur.java Participants\MAEDKU\*.java
+javac Othello\Move.java Othello\Joueur.java Participants\Console\Joueur.java Participants\AeberliKuehner\*.java

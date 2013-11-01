@@ -1,4 +1,4 @@
-package Participants.MAEDKU;
+package Participants.AeberliKuehner;
 
 import Othello.Move;
 
